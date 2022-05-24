@@ -15,9 +15,9 @@ class UserController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update!(update_params)
-    properties = {id: @user.id, email: @user.email, username: @user.username, btc: @user.btc, usd: @user.usd, auth_token: @user.auth_token, created_at: @user.created_at, updated_at: @user.updated_at}
-    render json: properties, status: :ok
+    @people = TransactionValidationService.validation(@user, params[:user])
+    response = {message: @people[:message]}
+    render json: response, status: :ok
   end
 
   private
@@ -30,13 +30,6 @@ class UserController < ApplicationController
       :usd,
       :password,
       :auth_token
-    )
-  end
-
-  def update_params
-    params.require(:user).permit(
-      :btc,
-      :usd
     )
   end
 

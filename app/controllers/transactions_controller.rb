@@ -7,7 +7,7 @@ include Secured
     if !params[:search].nil? && params[:search].present?
       @transaction = TransactionSearchService.search(@transaction, params[:search])
     end
-    render json: @transaction, status: :ok
+    render json: @transaction,  status: :ok
   end
 
   def show
